@@ -11,28 +11,18 @@ import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class CurrentWeatherService {
+export class ForecastService {
 
   public weatherSubject: Subject<any> = new Subject<any>();
   public $weather: Observable<any>;
 
-  api: string = 'weather/';
+  api: string = 'forecast/';
 
   constructor(private http: HttpClient) {
     this.$weather = this.weatherSubject.asObservable()
       .pipe(
-        map( (data: any) => {
-          let mainWeather = data.weather[0];
-          let weather: Weather =  {
-            name: data.name,
-            cod: data.cod,
-            temp: data.main.temp,
-            ...mainWeather
-          }
-
-          return weather
-        })
-      );
+        map(this.structureData)
+      )
 
     this.get({
       lat: 4.606880,
@@ -40,12 +30,40 @@ export class CurrentWeatherService {
     });
   }
 
+  structureData(data: any) {
+    let minMaxPerDay = {};
+    data.list.forEach( weatherObject => {
+      let date = new Date(weatherObject.dt * 1000);
+      let hours = date.getHours();
+      let month = date.getMonth() + 1;
+      let day = date.getDate();
+
+      let key = `${month}-${day}`;
+
+      let tempPerDay = minMaxPerDay[key] || {
+        minMaxTemp: {}
+      } as Weather;
+
+      if (!tempPerDay.minMaxTemp.min || (tempPerDay.minMaxTemp.min > weatherObject.main.temp_min) ) {
+        tempPerDay.minMaxTemp.min =  weatherObject.main.temp_min;
+      }
+
+      if (!tempPerDay.minMaxTemp.max || (tempPerDay.minMaxTemp.max < weatherObject.main.temp_max) ) {
+        tempPerDay.minMaxTemp.max =  weatherObject.main.temp_max;
+      }
+
+      minMaxPerDay[key] = tempPerDay;
+    });
+
+    return minMaxPerDay;
+  }
+
   get(coords: Coords) {
     let args: string = `?lat=${coords.lat}&lon=${coords.lon}&appid=${environment.weatherKey}&units=metric`;
     let url = environment.weatherEndpoint + this.api + args;
 
     if (isDevMode()) {
-      url = 'assets/weather.json';
+      url = 'assets/forecast.json';
     }
 
     this.http.get(url).subscribe(this.weatherSubject);

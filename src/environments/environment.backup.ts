@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  weatherEndpoint: 'http://api.openweathermap.org/data/2.5/weather',
+  weatherEndpoint: 'http://api.openweathermap.org/data/2.5/',
   weatherKey: 'YOUR-APPID'
 };
 
