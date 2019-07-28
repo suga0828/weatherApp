@@ -44,6 +44,13 @@ export class ForecastService {
         minMaxTemp: {}
       } as Weather;
 
+      if (!tempPerDay.cod || hours == 16) {
+        let source = weatherObject.weather[0];
+        tempPerDay = { ...tempPerDay, ...source };
+        tempPerDay.cod = source.id;
+        tempPerDay.name = data.city.name;
+      }
+
       if (!tempPerDay.minMaxTemp.min || (tempPerDay.minMaxTemp.min > weatherObject.main.temp_min) ) {
         tempPerDay.minMaxTemp.min =  weatherObject.main.temp_min;
       }
@@ -55,7 +62,7 @@ export class ForecastService {
       minMaxPerDay[key] = tempPerDay;
     });
 
-    return minMaxPerDay;
+    return Object.values(minMaxPerDay);
   }
 
   get(coords: Coords) {
