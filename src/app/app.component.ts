@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-import { CurrentWeatherService } from './services/current-weather.service';
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -10,9 +8,7 @@ import { CurrentWeatherService } from './services/current-weather.service';
 export class AppComponent implements OnInit {
   title = 'weatherApp';
 
-  constructor(private weatherService: CurrentWeatherService) { }
+  constructor() { }
 
-  ngOnInit() {
-    this.weatherService.$weather.subscribe(console.log);
-  }
+  ngOnInit() { }
 }
