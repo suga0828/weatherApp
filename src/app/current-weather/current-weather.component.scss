@@ -1,3 +1,6 @@
+@import './src/scss/colors';
+
+
 .card {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -20,9 +23,26 @@
 
   .temp {
     grid-area: temp;
+
+    p {
+      margin: 0;
+    }
+
+    .big {
+      font-size: 2em;
+      color: $main;
+      font-weight: bold;
+    }
   }
 
   .description {
     grid-area: description;
+
+    h2 {
+      font-size: 1.2em;
+      text-transform: uppercase;
+      letter-spacing: .1em;
+      color: $accent;
+    }
   }
 }
