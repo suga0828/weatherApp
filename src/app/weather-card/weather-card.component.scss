@@ -2,7 +2,7 @@
 
 
 .card {
-  display: grid;
+  display: inline-grid;
   grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(3, auto);
   grid-template-areas:
@@ -11,11 +11,13 @@
   "description description description description";
   background-color: white;
   width: 100%;
-  min-width: 300px;
+  max-width: 300px;
   margin: 0 auto;
   border-radius: 16px;
   box-shadow: 0 2px 3px rgba(0, 0, 0, .12), 0 1px 2px rgba(0, 0, 0, .24);
   text-align: center;
+  padding: 10px;
+  margin: 10px;
 
   .icon {
     grid-area: icon;
@@ -43,6 +45,28 @@
       text-transform: uppercase;
       letter-spacing: .1em;
       color: $accent;
+    }
+  }
+
+  .low-temp {
+    grid-area: lowtemp;
+    color: $accent;
+
+    span {
+      color: $dark;
+      font-size: .56em;
+      opacity: .56;
+    }
+  }
+
+  .hight-temp {
+    grid-area: highttemp;
+    color: $accent;
+
+    span {
+      color: $dark;
+      font-size: .56em;
+      opacity: .56;
     }
   }
 }

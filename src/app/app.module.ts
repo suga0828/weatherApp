@@ -10,13 +10,15 @@ import { AppComponent } from './app.component';
 import { CurrentWeatherComponent } from './current-weather/current-weather.component';
 import { WeatherIconComponent } from './weather-icon/weather-icon.component';
 import { WeatherCardComponent } from './weather-card/weather-card.component';
+import { ForecastWeatherComponent } from './forecast-weather/forecast-weather.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CurrentWeatherComponent,
     WeatherIconComponent,
-    WeatherCardComponent
+    WeatherCardComponent,
+    ForecastWeatherComponent
   ],
   imports: [
     BrowserModule,

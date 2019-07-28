@@ -2,6 +2,7 @@
 @import './colors';
 
 body {
+  box-sizing: border-box;
   font-family: 'Open Sans';
   background-color: $light;
   color: $dark;

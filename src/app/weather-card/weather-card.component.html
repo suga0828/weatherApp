@@ -2,9 +2,17 @@
   <div class="icon">
       <app-weather-icon [code]="weather.cod"></app-weather-icon>
   </div>
-  <div class="temp">
+  <div class="temp" *ngIf="weather.temp">
     <p>Temperatura</p>
     <div class="big">{{weather.temp}}*</div>
+  </div>
+  <div class="low-temp" *ngIf="weather.minMaxTemp">
+    {{weather.minMaxTemp.min}}
+    <span>Minima</span>
+  </div>
+  <div class="hight-temp" *ngIf="weather.minMaxTemp">
+    {{weather.minMaxTemp.max}}
+    <span>Maxima</span>
   </div>
   <div class="description">
     <h2>{{weather.name}}</h2>
