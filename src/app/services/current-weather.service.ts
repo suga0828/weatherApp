@@ -8,6 +8,8 @@ import { Coords } from '../interfaces/coords';
 import { Weather } from '../interfaces/weather';
 import { environment } from '../../environments/environment';
 
+import { GeolocationService } from './geolocation.service';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,7 +20,7 @@ export class CurrentWeatherService {
 
   api: string = 'weather/';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private geolocationService: GeolocationService) {
     this.$weather = this.weatherSubject.asObservable()
       .pipe(
         map( (data: any) => {
@@ -34,19 +36,15 @@ export class CurrentWeatherService {
         })
       );
 
-    this.get({
-      lat: 4.606880,
-      lon: -74.071838
-    });
+      this.geolocationService.$coords
+      .subscribe( (coords: Coords) => {
+        this.get(coords);
+      });
   }
 
   get(coords: Coords) {
     let args: string = `?lat=${coords.lat}&lon=${coords.lon}&appid=${environment.weatherKey}&units=metric`;
     let url = environment.weatherEndpoint + this.api + args;
-
-    if (isDevMode()) {
-      url = 'assets/weather.json';
-    }
 
     this.http.get(url).subscribe(this.weatherSubject);
   }
