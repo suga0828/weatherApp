@@ -8,8 +8,12 @@ import { Coords } from '../interfaces/coords'
 export class GeolocationService {
 
   public $coords: Promise<Coords>;
+  public $permission: Promise<string>;
 
-  constructor() { }
+  constructor() {
+    this.$permission =  (navigator as any).permissions.query({ name: 'geolocation'})
+                          .then( permissions => permissions.state )
+  }
 
   requestGeolocation() {
     this.$coords = this.getGeolocation();

@@ -12,7 +12,5 @@ export class AppComponent implements OnInit {
 
   constructor(private geolocationService: GeolocationService) { }
 
-  ngOnInit() {
-    this.geolocationService.requestGeolocation();
-  }
+  ngOnInit() { }
 }

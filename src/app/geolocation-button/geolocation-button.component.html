@@ -1,1 +1,4 @@
-<p>geolocation-button works!</p>
+<ng-container *ngIf="!(geolocationService.$coords | async)">
+  <button (click)="geolocationService.requestGeolocation()">Activar ubicacion</button>
+  <p>Al activarla recibiras datos del clima en tu ubicacion</p>
+</ng-container>
